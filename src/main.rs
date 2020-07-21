@@ -87,6 +87,22 @@ fn escape_time(c: Complex<f64>, limit: u32) -> Option<u32> {
     None
 }
 
+fn _escape_time_julia(z: Complex<f64>, limit: u32) -> Option<u32> {
+
+    let c = Complex::<f64>::new(0.36, 0.35);
+    let mut z = z.clone();
+    for i in 0..limit {
+        let xtemp = z.re * z.re - z.im * z.im;
+        z.im = 2.0 * z.re * z.im + c.im;
+        z.re = xtemp + c.re;
+        if z.norm_sqr() > 4.0 {
+            return Some(i);
+        }
+    }
+
+    None
+}
+
 /// Parse the string `s` as a coordinate pair, like `"400x600"` or `"1.0,0.5"`.
 /// Specifically, `s` should have the form <left><sep><right>, where <sep> is
 /// the character given by the `separator` argument, and <left> and <right> are both
